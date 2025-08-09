@@ -9,6 +9,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Health check endpoint for uptime monitoring
+app.get("/", (req, res) => {
+  res.status(200).send("Portfolio contact backend is running.");
+});
+
 app.post('/api/contact', async (req, res) => {
   const { name, email, message } = req.body;
 
@@ -33,7 +38,6 @@ app.post('/api/contact', async (req, res) => {
       ${message}
       `,
     });
-
 
     res.status(200).json({ message: "Email sent successfully!" });
   } catch (error) {
