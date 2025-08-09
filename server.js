@@ -22,11 +22,18 @@ app.post('/api/contact', async (req, res) => {
 
   try {
     await transporter.sendMail({
-      from: `"${name}" <${email}>`,
+      from: process.env.EMAIL_USER, // must be your own email when using Gmail SMTP
       to: process.env.EMAIL_USER,
       subject: "New Message from Portfolio Contact Form",
-      text: message
+      text: `
+      Name: ${name}
+      Email: ${email}
+
+      Message:
+      ${message}
+      `,
     });
+
 
     res.status(200).json({ message: "Email sent successfully!" });
   } catch (error) {
